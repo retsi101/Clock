@@ -8,7 +8,7 @@ export const timeToMinutes = (time) => {
   const [strHours, strMinutes] = splitTime(time)
   const minutes = (parseInt(strHours) * 60) + (parseInt(strMinutes) % 60)
   return minutes
-}
+} 
 
 export const minutesToTime = (_minutes) => {
   const hours   = String(Math.floor(_minutes / 60)).padStart(2, '0')

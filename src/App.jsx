@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'preact/hooks'
 import { currentAlarm, alarms, timestamp, time, isDarkMode, alarmSound } from './signals/store'
+import { timeToMinutes, timeDifference } from './utils/utils'
 import { useSignalEffect, effect } from '@preact/signals'
 
 import Clock from './components/Clock'
@@ -78,7 +79,15 @@ export default function App() {
   }
 
   const setTabTitle = () => {
-    document.title = alarms.value[0]?.time ?? 'Clock'
+    let minTime = Infinity
+
+    for (let i = 0; i < alarms.value.length; i++) {
+      minTime = Math.min(minTime, timeToMinutes(alarms.value[i].time))
+    }
+
+    const [minAlarm] = alarms.value.filter(i => timeToMinutes(i.time) !== minTime)
+
+    document.title = minAlarm?.time ?? 'Clock'
   }
 
   const dismissAlarms = () => {
